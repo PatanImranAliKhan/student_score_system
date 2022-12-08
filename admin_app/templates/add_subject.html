@@ -1,0 +1,160 @@
+{% extends "admin_base.html" %}
+{% load static %}
+{% block title %}
+Add Subject
+{% endblock %}
+{% block extra_style %}
+<style>
+	table {
+		margin-top: 50px;
+	}
+
+	.anchor {
+		color: blue;
+		border-bottom: 1px solid blue;
+	}
+
+	.addbutton {
+		float: right;
+		border: none;
+		height: 40px;
+		width: 100px;
+		cursor: pointer;
+        margin-top: 30px;
+	}
+
+	.jumbotron {
+		margin-top: 40px;
+	}
+
+	.signupform {
+		font-family: "Roboto", sans-serif;
+		margin: auto;
+		background-color: #fff;
+		border-radius: 15px;
+		padding: 20px;
+		margin-top: 5%;
+		border: 2px solid #000;
+	}
+
+	.heading {
+		font-weight: bold;
+		text-align: center;
+		margin-bottom: 10px;
+	}
+
+	.userlogo {
+		margin-top: 20px;
+		margin-bottom: 10px;
+		text-align: center;
+	}
+
+    thead
+    {
+        height: 70px;
+    }
+
+    table
+    {
+        height: 70px;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+	<div>
+		<div>
+			<div>
+				<button type="button" class="addbutton btn btn-primary" data-toggle="modal" data-target="#reviewModal"><i
+						class="fa fa-plus-circle" aria-hidden="true"></i> add</button>
+			</div>
+			<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="reviewModalLabel">Add Approver
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form action="" method="POST">
+								{% csrf_token %}
+								<div class="main">
+									<div class="form-group">
+                                        <select class="form-select form-control" name="branch" aria-label="branch select">
+                                            <option value="CSE" selected>CSE</option>
+                                            <option value="ECE">ECE</option>
+                                            <option value="EEE">EEE</option>
+                                          </select>
+                                    </div>
+									<div class="form-group">
+										<input type="text" name="subject" class="form-control" placeholder="Subject Name">
+									</div>
+									<button class="btn btn-primary" name="addapprover" type="submit">Submit</button>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+		{% if error %}
+		<div class="alert alert-danger">
+			{{error}}
+		</div>
+		{% endif %}
+		{% if message %}
+		<div class="alert alert-success">
+			{{message}}
+		</div>
+		{% endif %}
+		<div class="table-responsive">
+			<table class="table table-striped bg-white table-bordered">
+				<thead class="table-dark">
+					<tr>
+						<th scope="col">S.No</th>
+						<th scope="col">Subject Name</th>
+						<th scope="col">Branch Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">1</th>
+                        <td>Subject Name</td>
+                        <td>Branch Name</td>
+					</tr>
+                    <tr>
+						<th scope="row">1</th>
+                        <td>Subject Name</td>
+                        <td>Branch Name</td>
+					</tr>
+                    <tr>
+						<th scope="row">1</th>
+                        <td>Subject Name</td>
+                        <td>Branch Name</td>
+					</tr>
+                    <tr>
+						<th scope="row">1</th>
+                        <td>Subject Name</td>
+                        <td>Branch Name</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<!-- <div class="jumbotron" style="width: 100%;padding: 25px;">
+			<p class="lead">No new approvers were registered</p>
+		</div> -->
+		
+	</div>
+</div>
+{% endblock %}

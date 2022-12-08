@@ -1,0 +1,187 @@
+{% extends "admin_base.html" %}
+{% load static %}
+{% block title %}
+New Faculty
+{% endblock %}
+{% block extra_style %}
+<style>
+	table {
+		margin-top: 70px;
+        border: 2px solid #000;
+	}
+
+	.anchor {
+		color: blue;
+		border-bottom: 1px solid blue;
+	}
+
+	.searchbut {
+		width: 50px;
+		background-color: rgb(191, 204, 204);
+		border: none;
+		cursor: pointer;
+	}
+
+	.addbutton {
+		background-color: #f04612;
+		border-radius: 30px;
+		position: absolute;
+		right: 6%;
+		top: 10%;
+		border: none;
+		height: 40px;
+		width: 100px;
+		cursor: pointer;
+	}
+
+	.jumbotron {
+		margin-top: 40px;
+	}
+
+	.signupform {
+		font-family: "Roboto", sans-serif;
+		margin: auto;
+		background-color: #fff;
+		border-radius: 15px;
+		padding: 20px;
+		margin-top: 5%;
+		border: 2px solid #000;
+	}
+
+	.heading {
+		font-weight: bold;
+		text-align: center;
+		margin-bottom: 10px;
+	}
+
+	.userlogo {
+		margin-top: 20px;
+		margin-bottom: 10px;
+		text-align: center;
+	}
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+	<div>
+		
+		{% if error %}
+		<div class="alert alert-danger">
+			{{error}}
+		</div>
+		{% endif %}
+		{% if message %}
+		<div class="alert alert-success">
+			{{message}}
+		</div>
+		{% endif %}
+		<div class="table-responsive">
+			<table class="table table-striped bg-white ">
+				<thead>
+					<tr>
+						<th scope="col">S.No</th>
+						<th scope="col">Id number</th>
+						<th scope="col">username</th>
+						<th>Branch</th>
+                        <th>Subject</th>
+						<th></th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+					<tr>
+						<form action="" method="POST">
+							{% csrf_token %}
+							<th scope="row">1.</th>
+							<td>4562</td>
+							<td>chowdary</td>
+                            <td>CSE</td>
+                            <td>
+								<select class="form-control" name="subject" aria-label="Default select example" required>
+									<option selected>select menu</option>
+									<option value="Maths">Maths</option>
+									<option value="Java">Java</option>
+                                    <option value="DS">Ds</option>
+									<option value="cloud">Cloud</option>
+								</select>
+							</td>
+							<td>
+								<select class="form-control" name="assign" aria-label="Default select example" required>
+									<option selected>select menu</option>
+									<option value="True">Assign</option>
+									<option value="False">Hold</option>
+								</select>
+							</td>
+							<td><button type="submit" name="savedetails" value="id"
+									class="btn btn-primary">Send</button></td>
+						</form>
+					</tr>
+
+                    <tr>
+						<form action="" method="POST">
+							{% csrf_token %}
+							<th scope="row">1.</th>
+							<td>4562</td>
+							<td>chowdary</td>
+                            <td>CSE</td>
+                            <td>
+								<select class="form-control" name="subject" aria-label="Default select example" required>
+									<option selected>select menu</option>
+									<option value="Maths">Maths</option>
+									<option value="Java">Java</option>
+                                    <option value="DS">Ds</option>
+									<option value="cloud">Cloud</option>
+								</select>
+							</td>
+							<td>
+								<select class="form-control" name="assign" aria-label="Default select example" required>
+									<option selected>select menu</option>
+									<option value="True">Assign</option>
+									<option value="False">Hold</option>
+								</select>
+							</td>
+							<td><button type="submit" name="savedetails" value="chowdary@gmail.com"
+									class="btn btn-primary">Send</button></td>
+						</form>
+					</tr>
+
+                    <tr>
+						<form action="" method="POST">
+							{% csrf_token %}
+							<th scope="row">1.</th>
+							<td>4562</td>
+							<td>chowdary</td>
+                            <td>CSE</td>
+                            <td>
+								<select class="form-control" name="subject" aria-label="Default select example" required>
+									<option selected>select menu</option>
+									<option value="Maths">Maths</option>
+									<option value="Java">Java</option>
+                                    <option value="DS">Ds</option>
+									<option value="cloud">Cloud</option>
+								</select>
+							</td>
+							<td>
+								<select class="form-control" name="assign" aria-label="Default select example" required>
+									<option selected>select menu</option>
+									<option value="True">Assign</option>
+									<option value="False">Hold</option>
+								</select>
+							</td>
+							<td><button type="submit" name="savedetails" value="chowdary@gmail.com"
+									class="btn btn-primary">Send</button></td>
+						</form>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+
+		<!-- <div class="jumbotron" style="width: 100%;padding: 25px;">
+			<p class="lead">No new approvers were registered</p>
+		</div> -->
+	
+	</div>
+</div>
+{% endblock %}

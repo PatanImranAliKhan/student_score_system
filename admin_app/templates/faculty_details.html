@@ -1,0 +1,91 @@
+{% extends "admin_base.html" %}
+{% load static %}
+{% block title %}
+Faculty List
+{% endblock %}
+{% block extra_style %}
+<style>
+	table
+	{
+		margin-top: 20px;
+	}
+	.anchor
+	{
+		color: blue;
+		border-bottom: 1px solid blue;
+	}
+	.searchbut
+	{
+		width: 50px;
+		background-color: rgb(191, 204, 204);
+		border: none;
+		cursor: pointer;
+	}
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+	<div>
+		
+			<div>
+				<div class="col-md-6 offset-md-3 mt-5">
+					<form class="input-group mb-3" action="" method="POST">
+						{% csrf_token %}
+						<input type="text" class="form-control" name="search" placeholder="Search ......" aria-label="Recipient's username">
+						<div class="input-group-append">
+							<button class="searchbut" type="submit"><i class="fa fa-search"></i></button>
+						</div>
+					</form>
+				</div>		
+			</div>
+			{% if error %}
+			<div class="alert alert-danger">
+				{{error}}
+			</div>
+			{% endif %}
+			<div class="table-responsive">
+				<table class="table table-striped bg-white">
+					<thead>
+						<tr>
+							<th scope="col">S.No</th>
+							<th scope="col">id number</th>
+							<th scope="col">username</th>
+							<th scope="col">Subject</th>
+							<th scope="col">Branch</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+                        <tr>
+                            <th scope="row">1. </th>
+                            <td>4653</td>
+                            <td>Chowdary</td>
+                            <td>Cyber Security</td>
+                            <td>CSE</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1. </th>
+                            <td>4653</td>
+                            <td>Chowdary</td>
+                            <td>Cyber Security</td>
+                            <td>CSE</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1. </th>
+                            <td>4653</td>
+                            <td>Chowdary</td>
+                            <td>Cyber Security</td>
+                            <td>CSE</td>
+                        </tr>
+						
+					</tbody>
+				</table>
+			</div>
+		
+		<!-- <div class="jumbotron" style="width: 100%;">
+			<p class="lead"><b>No approvers were found</b></p>
+		</div> -->
+	
+	</div>
+</div>
+{% endblock %}
