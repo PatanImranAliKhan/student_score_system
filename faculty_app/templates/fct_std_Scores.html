@@ -4,7 +4,7 @@
 Student Scores
 {% endblock %}
 {% block extra_style %}
-<link rel="stylesheet" href="{% static 'css/subject_score.css'%}">
+<link rel="stylesheet" href="{% static 'css/scores_dis.css'%}">
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 {% endblock %}
 {% block content %}
@@ -51,7 +51,8 @@ Student Scores
                             <td>Mark</td>
                             <td>Otto</td>
                             <td>@mdo</td>
-                            <td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
+
+                            <td><span class="editbtn" id="190031274"><i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="modal" data-target="#exampleModal"></i></span></td>
                             <td><i class="fa fa-trash-o" aria-hidden="true"></i></td>
                         </tr>
                         <tr>
@@ -59,12 +60,16 @@ Student Scores
                             <td>Jacob</td>
                             <td>Thornton</td>
                             <td>@fat</td>
+                            <td><span class="editbtn" id="190030112"><i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="modal" data-target="#exampleModal"></i></span></td>
+                            <td><i class="fa fa-trash-o" aria-hidden="true"></i></td>
                         </tr>
                         <tr>
                             <td>3</td>
                             <td>Larry</td>
                             <td>the Bird</td>
                             <td>@twitter</td>
+                            <td><span class="editbtn" id="190031671"><i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="modal" data-target="#exampleModal"></i></span></td>
+                            <td><i class="fa fa-trash-o" aria-hidden="true"></i></td>
                         </tr>
                     </tbody>
                 </table>
@@ -73,9 +78,56 @@ Student Scores
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Grade Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+                <input type="text" name="idno" class="form-control" id="upd_id" disabled>
+            </div>
+            <div class="form-group">
+                <select class="form-control" name="upd_grade">
+                    <option value="A+" selected>A+</option>
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C+">C+</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="F">Fail</option>
+                </select>
+            </div>
+            <div class="fomr-group">
+                <input type="number" class="form-control" name="upd_mark" placeholder="Updated Marks">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <script>
 
 $(document).ready(function(){
+
+    $('.editbtn').click(function() {
+        var id = $(this).attr('id');
+        console.log(id)
+        $('#upd_id').val(id)
+    });
+
     $('.filterable .btn-filter').click(function(){
         var $panel = $(this).parents('.filterable'),
         $filters = $panel.find('.filters input'),

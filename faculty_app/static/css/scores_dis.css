@@ -31,7 +31,20 @@ table
 
 td
 {
-    min-width: 150px;
+    max-width: 250px;
+    min-width: 100px;
+}
+
+.fa-pencil-square-o
+{
+    color: orange;
+    cursor: pointer;
+}
+
+.fa-trash-o
+{
+    color: red;
+    cursor: pointer;
 }
 
 .thead
