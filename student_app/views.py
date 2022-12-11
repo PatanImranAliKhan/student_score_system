@@ -1,18 +1,23 @@
 from django.shortcuts import render, redirect
+import requests
+import json
 
 # Create your views here.
 
 def Subject_List(request):
     try:
-        print
         branch=request.session['branch']
         if(branch==None):
             return redirect("login")
-        curser=""
-        subjects_list=curser.execute("get all subjects of the above branch")
-        if(subjects_list==None):
-            return render(request,"std_home.html")
-        return render(request,"std_home.html",{"subjects_list": subjects_list})
+
+        resp_data=requests.get("http://localhost:3000/subject/branchSubjects/"+branch)
+        print(resp_data.text)
+        resp_data_json=json.loads(resp_data.text)
+        subjects_List=resp_data_json['message']
+        if(subjects_List=="Error"):
+            subjects_List=[]
+        
+        return render(request,"std_home.html",{"subjects": subjects_List})
     except:
         print("Error occurred in get Subject List")
     return render(request,"std_home.html")

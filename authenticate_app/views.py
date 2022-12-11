@@ -81,6 +81,8 @@ def LoginPage(request):
 
                 AddSession(request,user_Details)
                 request.session['profession']="faculty"
+                request.session['subject']=user_Details['subject']
+                request.session['branch']=user_Details['branch']
                 return redirect("addtestscore")
             except:
                 return render(request,'login.html',{'error':'invalid email or password'})
