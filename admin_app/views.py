@@ -1,35 +1,45 @@
 from django.shortcuts import render, redirect
+import uuid
+import requests
+import json
 
 # Create your views here.
 def AdminAddBranch(request):
-    message=None
-    error=None
     try:
-        error=None
-        message=None
         if(request.method=="POST"):
-            print("post req")
             branch=request.POST['branch']
-            curser=""
-            alrdreg = curser.execute("check branch was laready registered or not")
-            if(alrdreg==None):
-                try:
-                    c = curser.execute("add new branch ")
-                    message="New Branch Added Successfully"
-                except:
-                    error="Some error occurred Please try After some time"
-            else:
-                error="Branch was already Exist"
-        
-        curser=""
-        allbranch=curser.execute("get all branches information")
-        if(allbranch==None):
-            return render(request,"add_branch.html",{"error": error,"message":message})
+            print(branch)
+            if(len(branch)==0):
+                return render(request,"add_branch.html",{"error": "Branch Must be required"})
+            send_data = {
+                "name": branch
+            }
+            print(send_data)
+            
+            resp_data=requests.post("http://localhost:3000/branch/addBranch", json=send_data)
+            print(resp_data.text)
+
+            resp_data_json = json.loads(resp_data.text)
+            print(resp_data_json)
+            if(resp_data_json['message']=="Error"):
+                allbranches = requests.get("http://localhost:3000/branch/getBranches")
+                branches = json.loads(allbranches.text)
+                branches=branches["message"]
+                return render(request,"add_branch.html",{"error": branch+" is already Exists!!","branches": branches})
+
+            allbranches = requests.get("http://localhost:3000/branch/getBranches")
+            branches = json.loads(allbranches.text)
+            branches=branches["message"]
+
+            return render(request,"add_branch.html",{"branches": branches})
         else:
-            return render(request,"add_branch.html",{"allbranches": allbranch,"error": error,"message":message})
-        
-    except:
-        return render(request,"add_branch.html",{"error": error,"message":message})
+            allbranches = requests.get("http://localhost:3000/branch/getBranches")
+            branches = json.loads(allbranches.text)
+            branches=branches["message"]
+
+            return render(request,"add_branch.html",{"branches": branches})
+    except Exception as e:
+        return render(request,"add_branch.html")
 
 def AddSubject(request):
     error=None
@@ -40,16 +50,29 @@ def AddSubject(request):
         if(request.method=="POST"):
             subject=request.POS['subject']
             branch=request.POST['branch']
-            curser=""
-            checksub=curser.execute("check subject already exist in that branch or not ?")
-            if(checksub==None):
-                print("add subject")
-                curser.execute("Add new subject to the above branch")
-                message="Subject Added Successfully"
+            id=uuid.uuid4().hex
+
+            send_data = {
+                "id": id,
+                "subject": subject,
+                "branch": branch
+            }
+            print(send_data)
+
+            sub_resp = requests.post("http://localhost:3000/branch/getBranches", json=send_data)
+            
+            # if(checksub==None):
+            #     print("add subject")
+            #     curser.execute("Add new subject to the above branch")
+            #     message="Subject Added Successfully"
                 
-            else:
-                return render(request,"add_subject.html",{"error": "Subject laready exist in the branch"})
-        allsubjects=curser.execute("get all subjects")
+            # else:
+            #     return render(request,"add_subject.html",{"error": "Subject laready exist in the branch"})
+        allsubjects=("get all subjects")
+
+        allbranches = requests.get("http://localhost:3000/branch/getBranches")
+        branches = json.loads(allbranches.text)
+        branches=branches["message"]
         if(allsubjects==None):
             return render(request,"add_subject.html",{"error": error,"message":message})
         else:

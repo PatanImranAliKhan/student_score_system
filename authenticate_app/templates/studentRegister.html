@@ -36,10 +36,11 @@
 						</div> -->
                         <div class="form-group">
                             <select class="form-select form-control" name="branch" aria-label="branch select">
-                                <option value="CSE" selected>CSE</option>
-                                <option value="ECE">ECE</option>
-                                <option value="EEE">EEE</option>
-                              </select>
+								<option value="" selected>Select a branch</option>
+								{% for branch in branches %}
+								<option value="{{branch.name}}">{{branch.name}}</option>
+								{% endfor %}
+                            </select>
                         </div>
 						<!-- <div class="form-group">
 							<textarea placeholder='Address ...' class="form-control" rows="3"  required></textarea>
