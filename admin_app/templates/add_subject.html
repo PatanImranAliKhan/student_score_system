@@ -66,7 +66,7 @@ Add Subject
 	<div>
 		<div>
 			<div>
-				<button type="button" class="addbutton btn btn-primary" data-toggle="modal" data-target="#reviewModal"><i
+				<button type="button" style="margin-top: 70px;" class="addbutton btn btn-primary" data-toggle="modal" data-target="#reviewModal"><i
 						class="fa fa-plus-circle" aria-hidden="true"></i> add</button>
 			</div>
 			<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel"
@@ -74,7 +74,7 @@ Add Subject
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="reviewModalLabel">Add Approver
+							<h5 class="modal-title" id="reviewModalLabel">Add Subject
 							</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
@@ -85,12 +85,13 @@ Add Subject
 								{% csrf_token %}
 								<div class="main">
 									<div class="form-group">
-                                        <select class="form-select form-control" name="branch" aria-label="branch select">
-                                            <option value="CSE" selected>CSE</option>
-                                            <option value="ECE">ECE</option>
-                                            <option value="EEE">EEE</option>
-                                          </select>
-                                    </div>
+										<select class="form-select form-control" name="branch" aria-label="branch select">
+											<option value="" selected>Select a branch</option>
+											{% for branch in branches %}
+											<option value="{{branch.name}}">{{branch.name}}</option>
+											{% endfor %}
+										</select>
+									</div>
 									<div class="form-group">
 										<input type="text" name="subject" class="form-control" placeholder="Subject Name">
 									</div>
@@ -108,15 +109,19 @@ Add Subject
 
 		
 		{% if error %}
-		<div class="alert alert-danger">
+		<div class="alert alert-danger alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			{{error}}
 		</div>
 		{% endif %}
 		{% if message %}
-		<div class="alert alert-success">
+		<div class="alert alert-success alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			{{message}}
 		</div>
 		{% endif %}
+		{% if subjects %}
+
 		<div class="table-responsive">
 			<table class="table table-striped bg-white table-bordered">
 				<thead class="table-dark">
@@ -127,33 +132,24 @@ Add Subject
 					</tr>
 				</thead>
 				<tbody>
+					{% for subject in subjects %}
 					<tr>
-						<th scope="row">1</th>
-                        <td>Subject Name</td>
-                        <td>Branch Name</td>
+						<th scope="row">{{ forloop.counter }}</th>
+                        <td>{{subject.name}}</td>
+                        <td>{{subject.branch}}</td>
 					</tr>
-                    <tr>
-						<th scope="row">1</th>
-                        <td>Subject Name</td>
-                        <td>Branch Name</td>
-					</tr>
-                    <tr>
-						<th scope="row">1</th>
-                        <td>Subject Name</td>
-                        <td>Branch Name</td>
-					</tr>
-                    <tr>
-						<th scope="row">1</th>
-                        <td>Subject Name</td>
-                        <td>Branch Name</td>
-					</tr>
+					{% endfor %}
+                    
 				</tbody>
 			</table>
 		</div>
+
+		{% else %}
 		
-		<!-- <div class="jumbotron" style="width: 100%;padding: 25px;">
-			<p class="lead">No new approvers were registered</p>
-		</div> -->
+		<div class="jumbotron" style="width: 100%;padding: 25px;margin-bottom: 25px">
+			<p class="lead">No <b>Subjects</b> has been Added</p>
+		</div>
+		{% endif %}
 		
 	</div>
 </div>

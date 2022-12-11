@@ -65,16 +65,20 @@ New Faculty
 <div class="container">
 	<div>
 		
-		{% if error %}
-		<div class="alert alert-danger">
-			{{error}}
-		</div>
-		{% endif %}
 		{% if message %}
-		<div class="alert alert-success">
+		<div class="alert alert-success alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			{{message}}
 		</div>
 		{% endif %}
+		{% if error %}
+		<div class="alert alert-danger alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			{{error}}
+		</div>
+		{% endif %}
+		{% if faculty_details %}
+		<h3 style="text-align: center;margin-top: 25px;margin-bottom:-10px">Assign Faculty</h3>
 		<div class="table-responsive">
 			<table class="table table-striped bg-white ">
 				<thead>
@@ -84,103 +88,41 @@ New Faculty
 						<th scope="col">username</th>
 						<th>Branch</th>
                         <th>Subject</th>
-						<th></th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
 				<tbody>
-					
+					{% for faculty in faculty_details %}
 					<tr>
 						<form action="" method="POST">
 							{% csrf_token %}
-							<th scope="row">1.</th>
-							<td>4562</td>
-							<td>chowdary</td>
-                            <td>CSE</td>
+							<th scope="row">{{ forloop.counter }}.</th>
+							<td>{{faculty.id}}</td>
+							<td>{{faculty.username}}</td>
+                            <td>{{faculty.branch}}</td>
                             <td>
 								<select class="form-control" name="subject" aria-label="Default select example" required>
-									<option selected>select menu</option>
-									<option value="Maths">Maths</option>
-									<option value="Java">Java</option>
-                                    <option value="DS">Ds</option>
-									<option value="cloud">Cloud</option>
+									<option selected value="">select menu</option>
+									{% for subject in faculty.subjects %}
+										<option value="{{subject}}">{{subject}}</option>
+									{% endfor %}
 								</select>
 							</td>
-							<td>
-								<select class="form-control" name="assign" aria-label="Default select example" required>
-									<option selected>select menu</option>
-									<option value="True">Assign</option>
-									<option value="False">Hold</option>
-								</select>
-							</td>
-							<td><button type="submit" name="savedetails" value="id"
-									class="btn btn-primary">Send</button></td>
+							<td><button type="submit" name="assignid" value="{{faculty.id}}"
+									class="btn btn-primary">Assign</button></td>
 						</form>
 					</tr>
-
-                    <tr>
-						<form action="" method="POST">
-							{% csrf_token %}
-							<th scope="row">1.</th>
-							<td>4562</td>
-							<td>chowdary</td>
-                            <td>CSE</td>
-                            <td>
-								<select class="form-control" name="subject" aria-label="Default select example" required>
-									<option selected>select menu</option>
-									<option value="Maths">Maths</option>
-									<option value="Java">Java</option>
-                                    <option value="DS">Ds</option>
-									<option value="cloud">Cloud</option>
-								</select>
-							</td>
-							<td>
-								<select class="form-control" name="assign" aria-label="Default select example" required>
-									<option selected>select menu</option>
-									<option value="True">Assign</option>
-									<option value="False">Hold</option>
-								</select>
-							</td>
-							<td><button type="submit" name="savedetails" value="chowdary@gmail.com"
-									class="btn btn-primary">Send</button></td>
-						</form>
-					</tr>
-
-                    <tr>
-						<form action="" method="POST">
-							{% csrf_token %}
-							<th scope="row">1.</th>
-							<td>4562</td>
-							<td>chowdary</td>
-                            <td>CSE</td>
-                            <td>
-								<select class="form-control" name="subject" aria-label="Default select example" required>
-									<option selected>select menu</option>
-									<option value="Maths">Maths</option>
-									<option value="Java">Java</option>
-                                    <option value="DS">Ds</option>
-									<option value="cloud">Cloud</option>
-								</select>
-							</td>
-							<td>
-								<select class="form-control" name="assign" aria-label="Default select example" required>
-									<option selected>select menu</option>
-									<option value="True">Assign</option>
-									<option value="False">Hold</option>
-								</select>
-							</td>
-							<td><button type="submit" name="savedetails" value="chowdary@gmail.com"
-									class="btn btn-primary">Send</button></td>
-						</form>
-					</tr>
+					{% endfor %}
 					
 				</tbody>
 			</table>
 		</div>
+		{% else %}
 
-		<!-- <div class="jumbotron" style="width: 100%;padding: 25px;">
+		<div class="jumbotron" style="width: 100%;padding: 25px;">
 			<p class="lead">No new approvers were registered</p>
-		</div> -->
+		</div>
+		{% endif %}
 	
 	</div>
 </div>

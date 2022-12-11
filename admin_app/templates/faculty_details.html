@@ -5,17 +5,17 @@ Faculty List
 {% endblock %}
 {% block extra_style %}
 <style>
-	table
-	{
+	table {
 		margin-top: 20px;
+		border: 2px solid #000;
 	}
-	.anchor
-	{
+
+	.anchor {
 		color: blue;
 		border-bottom: 1px solid blue;
 	}
-	.searchbut
-	{
+
+	.searchbut {
 		width: 50px;
 		background-color: rgb(191, 204, 204);
 		border: none;
@@ -26,66 +26,68 @@ Faculty List
 {% block content %}
 <div class="container">
 	<div>
-		
-			<div>
-				<div class="col-md-6 offset-md-3 mt-5">
-					<form class="input-group mb-3" action="" method="POST">
-						{% csrf_token %}
-						<input type="text" class="form-control" name="search" placeholder="Search ......" aria-label="Recipient's username">
-						<div class="input-group-append">
-							<button class="searchbut" type="submit"><i class="fa fa-search"></i></button>
-						</div>
-					</form>
-				</div>		
+		{% if message %}
+		<div class="alert alert-success alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			{{message}}
+		</div>
+		{% endif %}
+		{% if error %}
+		<div class="alert alert-danger alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			{{error}}
+		</div>
+		{% endif %}
+		<br>
+		<div>
+			<div class="col-md-6 offset-md-3 mt-5">
+				<form class="input-group mb-3" action="" method="POST">
+					{% csrf_token %}
+					<input type="text" class="form-control" name="searchval" placeholder="Search ......"
+						aria-label="Recipient's username">
+					<div class="input-group-append">
+						<button class="searchbut" type="submit" name="search"><i class="fa fa-search"></i></button>
+					</div>
+				</form>
 			</div>
-			{% if error %}
-			<div class="alert alert-danger">
-				{{error}}
-			</div>
-			{% endif %}
-			<div class="table-responsive">
-				<table class="table table-striped bg-white">
-					<thead>
-						<tr>
-							<th scope="col">S.No</th>
-							<th scope="col">id number</th>
-							<th scope="col">username</th>
-							<th scope="col">Subject</th>
-							<th scope="col">Branch</th>
-						</tr>
-					</thead>
-					<tbody>
-						
-                        <tr>
-                            <th scope="row">1. </th>
-                            <td>4653</td>
-                            <td>Chowdary</td>
-                            <td>Cyber Security</td>
-                            <td>CSE</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1. </th>
-                            <td>4653</td>
-                            <td>Chowdary</td>
-                            <td>Cyber Security</td>
-                            <td>CSE</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1. </th>
-                            <td>4653</td>
-                            <td>Chowdary</td>
-                            <td>Cyber Security</td>
-                            <td>CSE</td>
-                        </tr>
-						
-					</tbody>
-				</table>
-			</div>
-		
-		<!-- <div class="jumbotron" style="width: 100%;">
-			<p class="lead"><b>No approvers were found</b></p>
-		</div> -->
-	
+		</div>
+		{% if faculty_details %}
+		<div class="table-responsive">
+			<table class="table table-striped bg-white">
+				<thead>
+					<tr>
+						<th scope="col">S.No</th>
+						<th scope="col">id number</th>
+						<th scope="col">username</th>
+						<th scope="col">Branch</th>
+						<th scope="col">Subject</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for faculty in faculty_details %}
+					<tr>
+						<form action="" method="post">
+							{% csrf_token %}
+							<th scope="row">{{ forloop.counter }}. </th>
+							<td>{{faculty.id}}</td>
+							<td>{{faculty.username}}</td>
+							<td>{{faculty.branch}}</td>
+							<td>{{faculty.subject}}</td>
+							<td><button class="btn btn-danger" name="deletefaculty"
+									value="{{faculty.id}}">Delete</button></td>
+						</form>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{% else %}
+		<div class="jumbotron" style="width: 100%;">
+			<p class="lead"><b>No Assigned faculty in the database</b></p>
+		</div>
+		{% endif %}
+
 	</div>
 </div>
 {% endblock %}
