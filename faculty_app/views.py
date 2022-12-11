@@ -119,3 +119,16 @@ def AddTestScore(request):
         print(e)
         return redirect("login")
     return render(request,"fct_home.html")
+
+def Logoutfaculty(request):
+    try:
+        del request.session['username']
+        del request.session['email']
+        del request.session['id']
+        del request.session['branch']
+        del request.session['profession']
+        del request.session['subject']
+        del request.session['branch']
+        return redirect("login")
+    except:
+        return redirect("login")

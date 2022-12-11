@@ -10,26 +10,35 @@ Student Scores
 {% block content %}
 <div class="container">
     <div class="scores">
+        {% if exam_names %}
         <div class="row" style="margin-top: 50px;">
-            <div class="col-lg-4 col-sm-6">
-                <div class="form-group">
-                    <select class="form-control">
-                        <option Selected value="test-1">Test-1</option>
-                        <option value="test-2">Test 2</option>
-                        <option value="test-2">Test 2</option>
-                        <option value="test-2">Test 2</option>
-                        <option value="test-2">Test 2</option>
-                    </select>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="col-lg-4 col-sm-6">
+                    <div class="form-group">
+                        <select class="form-control" style="width: 250px;" name="exam_name">
+                            <option Selected value="">Select the Exam</option>
+                            {% for exam in exam_names %}
+                            <option value="{{exam.exam_name}}">{{exam.exam_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="col">
-                <button class="btn btn-warning">Apply</button>
-            </div>
+                <div class="col">
+                    <button class="btn btn-warning" name="newexam" type="submit">Apply</button>
+                </div>
+            </form>
         </div>
+        {% else %}
+        <div class="container jumbotron" style="width: 100%;padding: 25px;margin-top: 50px">
+			<p class="lead">No <b>Exams</b> has been Added</p>
+		</div>
+        {% endif %}
+        {% if scores_data %}
         <div class="row">
             <div class="panel panel-primary filterable">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Score - dataScience</h3>
+                    <h3 class="panel-title">Score - {{exam_name}}</h3>
                     <div class="pull-right">
                         <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
                     </div>
@@ -38,40 +47,43 @@ Student Scores
                     <thead class="thead-dark">
                         <tr class="filters">
                             <th><input type="text" class="form-control" placeholder="#" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="First Name" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="Last Name" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="Username" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Id number" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Grade" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Marks" disabled></th>
+                            <!-- <th>Edit</th>
+                            <th>Delete</th> -->
                         </tr>
                     </thead>
                     <tbody>
+                        {% for score_data in scores_data %}
                         <tr>
-                            <td>1</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{score_data.student_id}}</td>
+                            <td>{{score_data.grade}}</td>
+                            <td>{{score_data.score}}</td>
+
+                            <!-- <td><span class="editbtn" id="190031274"><i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="modal" data-target="#exampleModal"></i></span></td>
+                            <td><i class="fa fa-trash-o" aria-hidden="true"></i></td> -->
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
 
 <script>
 
 $(document).ready(function(){
+
+    $('.editbtn').click(function() {
+        var id = $(this).attr('id');
+        console.log(id)
+        $('#upd_id').val(id)
+    });
+
     $('.filterable .btn-filter').click(function(){
         var $panel = $(this).parents('.filterable'),
         $filters = $panel.find('.filters input'),
